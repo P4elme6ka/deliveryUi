@@ -4,7 +4,11 @@ module.exports = {
   target: "static",
 
   router: {
-    base: "/Vuemmerce/"
+    base: "/"
+  },
+
+  proxy: {
+    '/api': { target: 'http://localhost:8121', pathRewrite: {'^/api': ''} }
   },
 
   /*
@@ -142,6 +146,7 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/proxy'
   ],
   /*
    ** Axios module configuration

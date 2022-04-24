@@ -9,9 +9,9 @@
 			<section class="modal-card-body">
 				<div v-if="!isCheckoutSection">
 					<div class="box" v-for="product in products" :key="product.id">
-						<button class="is-pulled-right button is-info is-inverted" @click="removeFromCart(product.id)">{{ removeLabel }}</button>
-						<p>{{ product.title }}  {{ product.quantity > 0 ?  ` - Quantity: ${product.quantity}` : ''}}</p>
-						<p>{{ product.price }} &euro;</p>
+						<button class="is-pulled-right button is-info is-inverted" @click="removeFromCart(product.Id)">{{ removeLabel }}</button>
+						<p>{{ product.Name }}  {{ product.quantity > 0 ?  ` - Quantity: ${product.quantity}` : ''}}</p>
+						<p>{{ product.Price }} &euro;</p>
 					</div>
 					<div v-if="products.length === 0">
 						<p>{{ cartEmptyLabel }}</p>
@@ -32,7 +32,7 @@
 <script>
 export default {
 	name: 'checkout',
-    
+
 	data () {
 		return {
 			modalTitle: 'Checkout',
@@ -48,11 +48,7 @@ export default {
 				return this.$store.getters.productsAdded;
 			},
 			openModal () {
-				if (this.$store.getters.isCheckoutModalOpen) {
-					return true;
-				} else {
-					return false;
-				}
+				return !!this.$store.getters.isCheckoutModalOpen;
 			},
 			buyLabel () {
 				let totalProducts = this.products.length,
@@ -72,7 +68,7 @@ export default {
 				});
 
 				finalPrice = pricesArray.reduce((a, b) => a + b, 0); // sum the prices
-				
+
 				if (totalProducts > 1) { // set plural or singular
 					productLabel = 'products';
 				} else {
@@ -101,6 +97,9 @@ export default {
 			this.$store.commit('removeFromCart', id);
 			this.$store.commit('setAddedBtn', data);
 		},
+    onBuyButton(){
+
+    },
 		onNextBtn () {
 			if (this.isUserLoggedIn) {
 				this.isCheckoutSection = true;
